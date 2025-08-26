@@ -17,6 +17,7 @@ import { Text } from 'src/ui/text';
 import { Select } from 'src/ui/select';
 import { RadioGroup } from 'src/ui/radio-group';
 import { Separator } from 'src/ui/separator';
+import { clsx } from 'clsx';
 
 interface ArticleParamsFormProps {
 	onSubmit: (values: ArticleStateType) => void;
@@ -29,7 +30,7 @@ export const ArticleParamsForm = ({
 	onReset,
 	state,
 }: ArticleParamsFormProps) => {
-	const [isOpen, setIsOpen] = useState(false);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const containerRef = useRef<HTMLDivElement | null>(null);
 
 	const [values, setValues] = useState<ArticleStateType>(state);
@@ -56,25 +57,23 @@ export const ArticleParamsForm = ({
 	};
 
 	useOutsideClickClose({
-		isOpen,
+		isOpen: isMenuOpen,
 		rootRef: containerRef,
-		onChange: () => setIsOpen(false),
+		onChange: () => setIsMenuOpen(false),
 	});
 
 	return (
 		<>
 			<ArrowButton
-				isOpen={isOpen}
+				isOpen={isMenuOpen}
 				onClick={(e: ReactMouseEvent<HTMLDivElement>) => {
 					e.stopPropagation();
-					setIsOpen((prev) => !prev);
+					setIsMenuOpen((prev) => !prev);
 				}}
 			/>
 			<aside
 				ref={containerRef}
-				className={`${styles.container} ${
-					isOpen ? styles.container_open : ''
-				}`}>
+				className={clsx(styles.container, isMenuOpen && styles.container_open)}>
 				<form
 					className={styles.form}
 					onSubmit={handleSubmit}
