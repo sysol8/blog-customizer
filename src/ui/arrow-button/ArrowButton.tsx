@@ -1,10 +1,11 @@
 import arrow from 'src/images/arrow.svg';
+import type { MouseEvent } from 'react';
 
 import styles from './ArrowButton.module.scss';
 import clsx from 'clsx';
 
 /** Функция для обработки открытия/закрытия формы */
-export type OnClick = () => void;
+export type OnClick = (e: MouseEvent<HTMLDivElement>) => void;
 
 type ArrowButtonProps = {
 	isOpen: boolean;
